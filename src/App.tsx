@@ -12,7 +12,6 @@ import {
   Alert,
   Snackbar,
   FormControl,
-  InputLabel,
   MenuItem,
   Select,
   TextField,
@@ -200,7 +199,8 @@ const App: React.FC = () => {
               Anterior
             </Button>
             <Typography variant="body2" align="center" sx={{ mt: 1 }}>
-              {currentPage} de {Math.ceil(searchedTasks.length / TASKS_PER_PAGE)}
+              {currentPage} de{" "}
+              {Math.ceil(searchedTasks.length / TASKS_PER_PAGE)}
             </Typography>
             <Button
               variant="contained"
