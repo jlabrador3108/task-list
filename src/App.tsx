@@ -11,6 +11,11 @@ import {
   Button,
   Alert,
   Snackbar,
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Select,
+  TextField,
 } from "@mui/material";
 import AddTaskForm from "./components/AddTaskForm";
 import TaskList from "./components/TaskList";
@@ -28,6 +33,11 @@ const App: React.FC = () => {
       : "light";
     return value;
   });
+
+  const [searchQuery, setSearchQuery] = useState("");
+  const [filter, setFilter] = useState<"all" | "completed" | "incomplete">(
+    "all"
+  );
 
   const {
     tasks,
@@ -83,10 +93,6 @@ const App: React.FC = () => {
     if (tasks.length === 0) fetchTasks();
   }, [fetchTasks]);
 
-  const startIndex = (currentPage - 1) * TASKS_PER_PAGE;
-  const endIndex = startIndex + TASKS_PER_PAGE;
-  const currentTasks = tasks.slice(startIndex, endIndex);
-
   const handleNextPage = () => {
     if (currentPage < Math.ceil(tasks.length / TASKS_PER_PAGE)) {
       setCurrentPage(currentPage + 1);
@@ -109,6 +115,20 @@ const App: React.FC = () => {
     clearError();
   };
 
+  const filteredTasks = tasks.filter((task) => {
+    if (filter === "completed") return task.completed;
+    if (filter === "incomplete") return !task.completed;
+    return true;
+  });
+
+  const searchedTasks = filteredTasks.filter((task) =>
+    task.title.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
+  const startIndex = (currentPage - 1) * TASKS_PER_PAGE;
+  const endIndex = startIndex + TASKS_PER_PAGE;
+  const currentTasks = searchedTasks.slice(startIndex, endIndex);
+
   return (
     <ThemeProvider theme={theme} defaultMode="light">
       <CssBaseline />
@@ -118,7 +138,52 @@ const App: React.FC = () => {
           <CircularProgress />
         </Container>
       )}
-      <Container maxWidth="lg" style={{ marginTop: "2rem" }}>
+      <Container
+        maxWidth="sm"
+        style={{
+          marginTop: "0.8rem",
+        }}
+      >
+        <Paper
+          elevation={1}
+          style={{
+            padding: "0.4rem",
+            borderRadius: "8px",
+            display: "flex",
+            justifyContent: "space-around",
+            gap: "10px",
+          }}
+        >
+          <TextField
+            label="Buscar tarea"
+            variant="outlined"
+            fullWidth
+            size="small"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            sx={{
+              "& .MuiInputLabel-root": {
+                color: theme.palette.text.primary,
+              },
+            }}
+          />
+          <FormControl fullWidth>
+            <Select
+              labelId="filter-label"
+              value={filter}
+              onChange={(e) =>
+                setFilter(e.target.value as "all" | "completed" | "incomplete")
+              }
+              size="small"
+            >
+              <MenuItem value="all">Todas</MenuItem>
+              <MenuItem value="completed">Completadas</MenuItem>
+              <MenuItem value="incomplete">Incompletas</MenuItem>
+            </Select>
+          </FormControl>
+        </Paper>
+      </Container>
+      <Container maxWidth="lg" style={{ marginTop: "0.8rem" }}>
         <Paper elevation={3} style={{ padding: "1.5rem", borderRadius: "8px" }}>
           <AddTaskForm addTask={addTask} />
           <TaskList
@@ -135,13 +200,13 @@ const App: React.FC = () => {
               Anterior
             </Button>
             <Typography variant="body2" align="center" sx={{ mt: 1 }}>
-              {currentPage} de {Math.ceil(tasks.length / TASKS_PER_PAGE)}
+              {currentPage} de {Math.ceil(searchedTasks.length / TASKS_PER_PAGE)}
             </Typography>
             <Button
               variant="contained"
               onClick={handleNextPage}
               disabled={
-                currentPage === Math.ceil(tasks.length / TASKS_PER_PAGE)
+                currentPage === Math.ceil(searchedTasks.length / TASKS_PER_PAGE)
               }
             >
               Siguiente

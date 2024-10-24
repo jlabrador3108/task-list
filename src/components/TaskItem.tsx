@@ -17,7 +17,9 @@ const TaskItem: React.FC<TaskItemProps> = ({
         marginBottom: "0.5rem",
         borderRadius: "4px",
         transition: "background-color 0.3s",
+        height: "40px"
       }}
+      
     >
       <ListItemText
         primary={task.title}

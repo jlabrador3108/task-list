@@ -28,6 +28,7 @@ const AddTaskForm: React.FC<AddTaskFormProps> = ({ addTask }) => {
         marginBottom="1rem"
       >
         <TextField
+          size="small"
           label="Nueva Tarea..."
           variant="outlined"
           value={taskName}
@@ -49,7 +50,6 @@ const AddTaskForm: React.FC<AddTaskFormProps> = ({ addTask }) => {
           type="submit"
           variant="contained"
           color="primary"
-          style={{ height: "56px" }}
         >
           Agregar
         </Button>
