@@ -183,7 +183,7 @@ const App: React.FC = () => {
         </Paper>
       </Container>
       <Container maxWidth="lg" style={{ marginTop: "0.8rem" }}>
-        <Paper elevation={3} style={{ padding: "1.5rem", borderRadius: "8px" }}>
+        <Paper elevation={3} style={{ padding: "1rem", borderRadius: "8px" }}>
           <AddTaskForm addTask={addTask} />
           <TaskList
             tasks={currentTasks}

@@ -15,7 +15,7 @@ interface State {
   clearError: () => void;
 }
 
-export const TASKS_PER_PAGE = 9;
+export const TASKS_PER_PAGE = 8;
 
 export const useTaskStore = create<State>()(
   persist(

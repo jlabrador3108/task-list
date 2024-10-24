@@ -17,8 +17,9 @@ const TaskItem: React.FC<TaskItemProps> = ({
         marginBottom: "0.5rem",
         borderRadius: "4px",
         transition: "background-color 0.3s",
-        padding: "0.2rem",
-        paddingLeft: "0.5rem",
+        padding: 0,
+        paddingLeft: "1rem",
+        paddingRight: "1rem",
       }}
     >
       <ListItemText
