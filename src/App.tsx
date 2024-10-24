@@ -25,7 +25,7 @@ const App: React.FC = () => {
       ? storedTheme === "light"
         ? "light"
         : "dark"
-      : "dark";
+      : "light";
     return value;
   });
 
@@ -110,7 +110,7 @@ const App: React.FC = () => {
   };
 
   return (
-    <ThemeProvider theme={theme} defaultMode="dark">
+    <ThemeProvider theme={theme} defaultMode="light">
       <CssBaseline />
       <Navbar mode={mode} toggleMode={toggleMode} />
       {loading && (
@@ -136,7 +136,7 @@ const App: React.FC = () => {
             </Button>
             <Typography variant="body2" align="center" sx={{ mt: 1 }}>
               {currentPage} de {Math.ceil(tasks.length / TASKS_PER_PAGE)}
-            </Typography>         
+            </Typography>
             <Button
               variant="contained"
               onClick={handleNextPage}
